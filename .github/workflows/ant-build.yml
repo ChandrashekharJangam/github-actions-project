@@ -1,0 +1,43 @@
+name: Build Java Project with Ant
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11' # You can specify a different Java version if needed
+        distribution: 'temurin'
+
+    - name: Set up Ant
+      uses: actions/setup-ant@v3
+      with:
+        ant-version: '1.10.14' # You can specify a different Ant version if needed
+
+    - name: Execute Ant build
+      run: ant -noinput # Executes the default Ant build file (build.xml)
+
+    # Optional steps:
+
+    # - name: Run tests (if defined in your build.xml)
+    #   run: ant test
+
+    # - name: Package application (if defined in your build.xml)
+    #   run: ant package
+
+    # - name: Upload artifacts (e.g., JAR file)
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: my-java-app
+    #     path: build/my-app.jar # Adjust the path based on your build output
